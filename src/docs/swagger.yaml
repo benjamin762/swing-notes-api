@@ -1,0 +1,158 @@
+openapi: 3.0.0
+info:
+  title: Swing Notes API
+  version: 1.0.0
+  description: API för att hantera anteckningar och användarkonton
+
+servers:
+  - url: http://localhost:3000
+
+tags:
+  - name: Notes
+    description: Allt som rör anteckningar
+  - name: User
+    description: Allt som rör användarkonton och autentisering
+
+paths:
+  /api/user/signup:
+    post:
+      tags:
+        - User
+      summary: Skapa ett nytt konto
+      requestBody:
+        description: Användarinformation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                    type: string
+                password:
+                    type: string
+      responses:
+        '200':
+          description: Kontot skapades
+        '400':
+          description: Ogiltig begäran
+
+  /api/user/login:
+    post:
+      tags:
+        - User
+      summary: Logga in och utfärda JWT
+      requestBody:
+        description: Användarinformation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                    type: string
+                password:
+                    type: string
+      responses:
+        '200':
+          description: Inloggad
+        '400':
+          description: Ogiltig begäran
+
+  /api/notes:
+    get:
+      tags:
+        - Notes
+      summary: Hämta alla anteckningar
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Lista över dina anteckningar
+    post:
+      tags:
+        - Notes
+      summary: Skapa en anteckning
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Note'
+      responses:
+        '201':
+          description: Anteckningen skapades
+
+    put:
+      tags:
+        - Notes
+      summary: Ändra en anteckning
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Note'
+      responses:
+        '200':
+          description: Anteckningen uppdaterades
+
+    delete:
+      tags:
+        - Notes
+      summary: Ta bort en anteckning
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Anteckningen togs bort
+        '404':
+          description: Anteckningen hittades inte
+
+  /api/notes/search:
+    get:
+      tags:
+        - Notes
+      summary: Sök anteckningar på titel
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: title
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sökresultat
+
+components:
+  schemas:
+    Note:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+          maxLength: 50
+        text:
+          type: string
+          maxLength: 300
+        createdAt:
+          type: string
+          format: date-time
+        modifiedAt:
+          type: string
+          format: date-time
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

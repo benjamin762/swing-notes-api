@@ -19,11 +19,14 @@ async function userSignup (req, res) {
     res.status(201).json({message:'User created.', username})
 }
 async function userLogin (req, res) {
-    const { username, password } = req.body
-    // if !username, password
+    // const { username, password } = req.body
+    // if (!username || !password) {return res.status(400).json({error:'Username or password missing.'})}
 
+    const result = pool.query(`SELECT 1`)
+    res.send(result)
+    return
     // const result = pool.query(`SELECT username, password, role FROM users WHERE username = $1`, [username])
-    const user = result[0]
+    // const user = result[0]
     // if !user
 
     const hash = bcrypt.hash(password, 14)

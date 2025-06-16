@@ -2,12 +2,19 @@
 
 const PORT = process.env.PORT ?? 3000
 
-const DATABASE_URL = process.env.DATABASE_URL
-if (!DATABASE_URL) {throw new Error('Database url missing, add to .env')}
+
+const DATABASE = {
+    user: process.env.PGUSER ?? 'postgres',
+    host: process.env.PGHOST ?? 'localhost',
+    database: process.env.PGDATABASE ?? 'swing-notes',
+    password: process.env.PGPASSWORD,
+    port: process.env.PGPORT ?? '5432',
+}
+if (!DATABASE.password) {throw new Error('Database urlgfhjfghfhjgf TODO missing, add to .env')}
 
 const JWT_SECRET = process.env.JWT_SECRET
 if (!JWT_SECRET) {throw new Error('JWT-secret missing, add to .env')}
 
 
-export { PORT, DATABASE_URL, JWT_SECRET}
+export { PORT, DATABASE, JWT_SECRET}
 

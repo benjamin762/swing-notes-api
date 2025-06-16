@@ -6,9 +6,9 @@ function authenticate (req, res, next) {
     const token = req.headers.authorize;
     if(!token){res.status(400).json({error:'Authorisation missing.'})}
 
-    const user = jwt.verify(token, JWT_SECRET)
+    // const user = jwt.verify(token, JWT_SECRET)
 
-    res.locals.user = user
+    // res.locals.user = user
 
     // try catch
 
