@@ -22,3 +22,7 @@ PGPORT=5432
    se setup/db.sql
 
 4. npm run dev
+
+## Kända brister
+
+1. Saknas en hel del felhantering och try-catch runt databasförfrågningarna.

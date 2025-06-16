@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS public.users
     username character varying(30) COLLATE pg_catalog."default" NOT NULL,
     id integer NOT NULL DEFAULT nextval('users_id_seq'::regclass),
     password character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    role character varying(100) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT users_pkey PRIMARY KEY (id)
 )
 
