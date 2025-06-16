@@ -42,6 +42,6 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJSDoc(swaggerOptions)
 
-router.use("/api-docs", SwaggerUI.serve, SwaggerUI.setup(swaggerOptions))
+router.use("/api-docs", SwaggerUI.serve, SwaggerUI.setup(swaggerDocs))
 
 export default router
