@@ -10,7 +10,7 @@ https://github.com/FJSX24/FJSX24-Backendutveckling-Vecka23
 3. .env
 ```
 PORT=3000
-JWT_SEVRET=secret
+JWT_SECRET=secret
 PGUSER=postgres
 PGHOST=localhost
 PGPASSWORD=password123
