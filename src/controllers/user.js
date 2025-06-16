@@ -23,21 +23,20 @@ async function userSignup (req, res) {
     res.status(201).json({message:'User created.', username})
 }
 async function userLogin (req, res) {
-    // const { username, password } = req.body
-    // if (!username || !password) {return res.status(400).json({error:'Username or password missing.'})}
+    const { username, password } = req.body
+    if (!username || !password) {return res.status(400).json({error:'Username or password missing.'})}
 
-    const result = pool.query(`SELECT 1`)
-    res.send(result)
-    return
-    // const result = pool.query(`SELECT username, password, role FROM users WHERE username = $1`, [username])
-    // const user = result[0]
-    // if !user
 
-    const hash = bcrypt.hash(password, 14)
-    if(hash !== user.password) {
-        res.status('403?not auht').json({error:'Wrong password.'})
+    const result = await pool.query(`SELECT username, password, role FROM users WHERE username = $1`, [username])
+    const user = result.rows[0]
+    if (!user) {return res.status(400).json({error:'User missing.'})}
+    
+    const passwordCorrect = await bcrypt.compare(password, user.password)
+    if(!passwordCorrect) {
+        return res.status(401).json({error:'Wrong password.'})
     }
-
+    // TODO return same error for username and pw to stop timing attack and info leak.
+    
     const token = JWT.sign(
         {
             username: user.username, 
@@ -46,7 +45,7 @@ async function userLogin (req, res) {
         JWT_SECRET,
         {expiresIn: '1h'}
     )
-
+    
     res.status(200).json({message:'Login ok. new token', token })
 }
 
