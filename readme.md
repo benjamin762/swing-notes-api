@@ -10,7 +10,15 @@ https://github.com/FJSX24/FJSX24-Backendutveckling-Vecka23
 3. .env
 ```
 PORT=3000
-DATABASE_URL=postgres://-url
 JWT_SEVRET=secret
+PGUSER=postgres
+PGHOST=localhost
+PGPASSWORD=password123
+PGDATABASE=swing-notes
+PGPORT=5432
+```
 4. skapa databas
+   
+   se setup/db.sql
+
 4. npm run dev
