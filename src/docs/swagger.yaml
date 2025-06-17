@@ -98,6 +98,10 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Note'
+            example:
+              id: 01977de3-a070-728f-a4fe-8a9af071a873
+              title: Ny titel
+              text: Ändrad anteckning.
       responses:
         '200':
           description: Anteckningen uppdaterades

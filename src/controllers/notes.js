@@ -26,21 +26,28 @@ function newNote(req, res) {
 
     res.status(201).json({message:'Note created', id})
 }
-function changeNote(req, res) {
-    // user
-    // note
-    // sql UPDATE
-    res.status(200).json({message: 'Note changed'})
+async function changeNote(req, res) {
+    // Change title and text of a note. Don't allow changing id, username or createdAt. Update modifiedAt.
 
-    // byt inte id eller createdAt
-    // uppdatera modifiedAt
+    const username = res.locals.user.username
+    const {id, title: newTitle, text: newText} = req.body
+
+    const result = await pool.query(
+        'UPDATE notes SET title = $1, text = $2, "modifiedAt" = $3 WHERE id = $4 AND username = $5',
+        [newTitle, newText, new Date(), id, username]
+    )
+    if (result.rowCount > 0) {
+        res.status(200).json({message: 'Note changed'})
+    } else {
+        res.status(400).json({error: 'No note changed. Wrong id?'})
+    }
 }
-function deleteNote(req, res) {
+async function deleteNote(req, res) {
     // user
     const {noteId} = req.body
     pool.query('DROP FROM notes WHERE id =$1 and userid = $2',[])
 }
-function searchNote(req, res) {
+async function searchNote(req, res) {
     const user = res.locals.user.username
     const query = req.body.params.query['q']
 
