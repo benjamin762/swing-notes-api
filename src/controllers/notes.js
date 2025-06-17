@@ -1,8 +1,9 @@
 import pool from "../utils/db.js"
+import {v7 as createId} from 'uuid'
 
 async function getNotes(req, res) {
     //Extra: Kolla om param för spcifik note id
-    console.log(req.params, req.query)
+    // console.log(req.params, req.query)
 
     //Hämta alla notes
     const result = await pool.query(
@@ -16,13 +17,14 @@ async function getNotes(req, res) {
 function newNote(req, res) {
     const username = res.locals.user.username
     const {title, text} = req.body
+    const id = createId()
 
     pool.query(
-        'INSERT title, text, createdAt, modifiedAt INTO notes VALUES $1$2$3',
-        [title, text, Date.now(), Date.now()]
-    )
+        'INSERT INTO notes (id, username, title, text, "createdAt", "modifiedAt") VALUES ($1, $2, $3, $4, $5, $6)', 
+        [id, username, title, text, new Date(), new Date()]
+    );
 
-    res.status(201).json({message:'Note created'})
+    res.status(201).json({message:'Note created', id})
 }
 function changeNote(req, res) {
     // user

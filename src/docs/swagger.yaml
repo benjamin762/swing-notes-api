@@ -72,6 +72,7 @@ paths:
       tags:
         - Notes
       summary: Skapa en anteckning
+      description: Skapa ny anteckning med title och text. Båda datum sätts till aktuell tid. Id genereras automatiskt.
       security:
         - bearerAuth: []
       requestBody:
@@ -79,6 +80,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Note'
+            example:
+              title: string
+              text: string
       responses:
         '201':
           description: Anteckningen skapades
