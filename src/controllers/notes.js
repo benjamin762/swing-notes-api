@@ -6,7 +6,8 @@ async function getNote(req, res) {
     res.status(200).json({message: 'ok', note: result[0]})
 }
 async function getNotes(req, res) {
-    const result = await pool.wuery('select * from notes where userid = $1', [res.locals.user.username])
+    return res.send(99)
+    const result = await pool.query('select * from notes where userid = $1', [res.locals.user.username])
 
     res.send({notes: result})
 
