@@ -10,11 +10,13 @@ router.use(authenticate)
 router.get("/notes", getNotes)
 router.post("/notes", newNote)
 
+// Search must be before :id to work.
+router.get("/notes/search", searchNote)
+
 router.get("/notes/:id", getNote)
 router.put("/notes/:id", changeNote)
 router.delete("/notes/:id", deleteNote)
 
-router.get("/notes/search", searchNote)
 
 
 export default router

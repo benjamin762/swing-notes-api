@@ -67,12 +67,24 @@ async function deleteNote(req, res) {
     }
 }
 async function searchNote(req, res) {
-    const user = res.locals.user.username
-    const query = req.body.params.query['q']
+    // Possible improvements: https://chatgpt.com/s/t_685189de11f881918d749d54888f940b
+    const username = res.locals.user.username
+    const searchTerm = req.query.title
+console.log('sadfjkasdljkf')
+    if (!searchTerm) {return res.status(400).json({error:'Search term missing.'})}
 
-    // select psql search from title in notes
+    const result = await pool.query(
+        `SELECT id, title, text, "createdAt", "modifiedAt"
+        FROM notes 
+        WHERE username = $1 AND title ILIKE '%' || $2  || '%'`,
+        [username, searchTerm]
+    )
 
-    res.status(200).json({})
+    res.status(200).json({
+        message: 'Search done.',
+        count: result.rowCount,
+        results: result.rows
+    })
 }
 
 export {getNotes, newNote, getNote, changeNote, deleteNote, searchNote}
