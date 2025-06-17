@@ -86,20 +86,45 @@ paths:
       responses:
         '201':
           description: Anteckningen skapades
-
+  
+  /api/notes/{id}:
+    get:
+      tags:
+        - Notes
+      summary: Hämta en anteckning
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            example: 01977de3-a070-728f-a4fe-8a9af071a873
+          required: true
+      responses:
+        '200':
+          description: Din anteckning
+        '404':
+          description: Anteckningen hittades inte
     put:
       tags:
         - Notes
       summary: Ändra en anteckning
       security:
         - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            example: 01977de3-a070-728f-a4fe-8a9af071a873
+          required: true
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Note'
             example:
-              id: 01977de3-a070-728f-a4fe-8a9af071a873
               title: Ny titel
               text: Ändrad anteckning.
       responses:
@@ -113,10 +138,11 @@ paths:
       security:
         - bearerAuth: []
       parameters:
-        - in: query
+        - in: path
           name: id
           schema:
             type: string
+            example: 01977de3-a070-728f-a4fe-8a9af071a873
           required: true
       responses:
         '200':
