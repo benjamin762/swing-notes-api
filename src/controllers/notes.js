@@ -1,15 +1,16 @@
 import pool from "../utils/db.js"
 
-async function getNote(req, res) {
-    const result = await pool.query(`SELECT * FROM notes WHERE userid = $1 AND id = $2`, [res.locals.user.username, req.params.id])
-
-    res.status(200).json({message: 'ok', note: result[0]})
-}
 async function getNotes(req, res) {
-    return res.send(99)
-    const result = await pool.query('select * from notes where userid = $1', [res.locals.user.username])
+    //Extra: Kolla om param för spcifik note id
+    console.log(req.params, req.query)
 
-    res.send({notes: result})
+    //Hämta alla notes
+    const result = await pool.query(
+        'SELECT * FROM notes WHERE username = $1',
+        [res.locals.user.username]
+    )
+
+    res.send({notes: result.rows})
 
 }
 function newNote(req, res) {
@@ -43,4 +44,4 @@ function searchNote(req, res) {
     res.status(200).json({})
 }
 
-export {getNote, getNotes, newNote, changeNote, deleteNote, searchNote}
+export {getNotes, newNote, changeNote, deleteNote, searchNote}
