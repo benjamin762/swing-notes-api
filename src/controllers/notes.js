@@ -6,7 +6,7 @@ async function getNotes(req, res) {
 
     //Hämta alla notes
     const result = await pool.query(
-        'SELECT * FROM notes WHERE username = $1',
+        'SELECT id, title, text, "createdAt", "modifiedAt" FROM notes WHERE username = $1',
         [res.locals.user.username]
     )
 
@@ -14,10 +14,13 @@ async function getNotes(req, res) {
 
 }
 function newNote(req, res) {
-    const user = res.locals.user.username
-    const note = req.body
+    const username = res.locals.user.username
+    const {title, text} = req.body
 
-    pool.query('INSERT INTO notes')
+    pool.query(
+        'INSERT title, text, createdAt, modifiedAt INTO notes VALUES $1$2$3',
+        [title, text, Date.now(), Date.now()]
+    )
 
     res.status(201).json({message:'Note created'})
 }
