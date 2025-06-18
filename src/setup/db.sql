@@ -46,8 +46,8 @@ ALTER TABLE IF EXISTS public.users
 CREATE TABLE IF NOT EXISTS public.notes
 (
     id character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    title character varying(200) COLLATE pg_catalog."default",
-    text character varying(4000) COLLATE pg_catalog."default",
+    title character varying(50) COLLATE pg_catalog."default",
+    text character varying(300) COLLATE pg_catalog."default",
     "createdAt" date,
     "modifiedAt" date,
     "user-id" integer NOT NULL,

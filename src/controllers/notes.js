@@ -88,3 +88,5 @@ console.log('sadfjkasdljkf')
 }
 
 export {getNotes, newNote, getNote, changeNote, deleteNote, searchNote}
+
+// TODO Felhantering try-catch pool.query https://chatgpt.com/c/68518a13-4c7c-8013-ab69-82ac0e5fc98d
