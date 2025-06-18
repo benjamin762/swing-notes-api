@@ -7,7 +7,7 @@ async function userSignup (req, res) {
     const { username, password } = req.body
     if (!username || !password) {return res.status(400).json({error: 'Username or password missing.'})}
 
-    // Möjlig förbättring: https://chatgpt.com/share/68500c95-8c40-8013-825a-6ce5e4efa983
+    // Possible improvement for only one db query: https://chatgpt.com/share/68500c95-8c40-8013-825a-6ce5e4efa983
     const result = await pool.query(`SELECT 1 FROM users WHERE username = $1`, [username])
     if(result.rows.length > 0) {return res.status(500).json({error: 'Username already taken.'})}
     
