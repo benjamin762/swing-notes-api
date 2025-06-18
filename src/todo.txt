@@ -1,0 +1,8 @@
+
+
+async function searchNote(req, res) {
+    // Possible improvements: https://chatgpt.com/s/t_685189de11f881918d749d54888f940b
+
+
+felhantering till middleware/error function för databasfelet?
+https://chatgpt.com/share/6852d41c-a2e0-8013-87b9-dc8f0564c46b

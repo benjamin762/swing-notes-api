@@ -23,6 +23,3 @@ PGPORT=5432
 
 4. npm run dev
 
-## Kända brister
-
-1. Saknas en hel del felhantering och try-catch runt databasförfrågningarna.

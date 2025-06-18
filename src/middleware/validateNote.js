@@ -1,4 +1,4 @@
-function validateNote(req, res) {
+function validateNote(req, res, next) {
     const {title, text} = req.body
 
     if (title.length > 50) {return res.status(400).json({error:'Title too long.'})}
