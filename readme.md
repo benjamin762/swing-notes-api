@@ -26,4 +26,3 @@ PGPORT=5432
 ## Kända brister
 
 1. Saknas en hel del felhantering och try-catch runt databasförfrågningarna.
-2. createdAt och modifitedAt är endast datum utan klockslag eller tidszon eftersom kolumnerna i databasen är typen date istället för timestamp eller timestampz.

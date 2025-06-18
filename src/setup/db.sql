@@ -46,15 +46,28 @@ ALTER TABLE IF EXISTS public.users
 CREATE TABLE IF NOT EXISTS public.notes
 (
     id character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    title character varying(50) COLLATE pg_catalog."default",
-    text character varying(300) COLLATE pg_catalog."default",
-    "createdAt" date,
-    "modifiedAt" date,
-    "user-id" integer NOT NULL,
-    CONSTRAINT notes_pkey PRIMARY KEY (id)
+    title character varying(200) COLLATE pg_catalog."default",
+    text character varying(4000) COLLATE pg_catalog."default",
+    "createdAt" timestamp with time zone,
+    "modifiedAt" timestamp with time zone,
+    username character varying COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT notes_pkey PRIMARY KEY (id),
+    CONSTRAINT "usernameFK" FOREIGN KEY (username)
+        REFERENCES public.users (username) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
 )
 
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.notes
     OWNER to postgres;
+-- Index: fki_usernameFK
+
+-- DROP INDEX IF EXISTS public."fki_usernameFK";
+
+CREATE INDEX IF NOT EXISTS "fki_usernameFK"
+    ON public.notes USING btree
+    (username COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
