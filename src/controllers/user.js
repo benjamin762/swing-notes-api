@@ -35,7 +35,6 @@ async function userLogin (req, res) {
     if(!passwordCorrect) {
         return res.status(401).json({error:'Wrong password.'})
     }
-    // TODO return same error for username and pw to stop timing attack and info leak.
     
     const token = JWT.sign(
         {
