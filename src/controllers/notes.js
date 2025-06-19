@@ -52,8 +52,9 @@ async function changeNote(req, res) {
     // Change title and text of a note. Don't allow changing id, username or createdAt. Update modifiedAt.
     try {
         const username = res.locals.user.username
-        const {id, title: newTitle, text: newText} = req.body
-        
+        const id = req.params.id
+        const {title: newTitle, text: newText} = req.body
+
         const result = await pool.query(
             'UPDATE notes SET title = $1, text = $2, "modifiedAt" = $3 WHERE id = $4 AND username = $5',
             [newTitle, newText, new Date(), id, username]
@@ -77,7 +78,6 @@ async function deleteNote(req, res) {
             'DELETE FROM notes WHERE id = $1 AND username = $2',
             [id, username]
         )
-        console.log(result)
         if (result.rowCount > 0) {
             res.status(200).json({message:'Note deleted', id})
         } else {
